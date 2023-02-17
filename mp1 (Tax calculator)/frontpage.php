@@ -25,12 +25,15 @@
 					{
 						//This initializes the variables
 						$complete = true; 
-						$money = $_POST['salary'];
+						$string_money = $_POST['salary'];
+						$fakemoney = str_replace(',', '', $string_money);
+						$money = floatval($fakemoney);
 						$type = $_POST['type'];
-						$Annual_Salary = 0;
-						$Monthly_Salary = 0;
-						$Est_Annual_Tax = 0;
-						$Est_Monthly_Tax = 0;
+						$Annual_Salary = 0.00;
+						$Monthly_Salary = 0.00;
+						$Est_Annual_Tax = 0.00;
+						$Est_Monthly_Tax = 0.00;
+						
 					
 						switch($type){
 							case 'Monthly':
@@ -40,9 +43,9 @@
 							
 							if ($Annual_Salary < 250000){
 								//This computes for Est Annual Tax 
-								$Est_Annual_Tax = 0;
+								$Est_Annual_Tax = "None";
 								//This computes for Est Monthly Tax 
-								$Est_Monthly_Tax = 0;
+								$Est_Monthly_Tax = "None";
 
 							}	
 							else if ($Annual_Salary >= 250000 && $Annual_Salary < 400000){
@@ -148,7 +151,7 @@
 
 	</head>
 	
-		<body>
+	<body>
 
 		<header class="bg"> 
 
@@ -162,7 +165,12 @@
 		
 					
 					<td align="right" valign="top">Salary: (PHP)</td>
-					<td><input type="text" name="salary"  class="Input" placeholder="Ex: 13,000" size="15" style="height: 48px;  font-size: 18pt; font-family: 'Poppins', sans-serif;"></td>							
+					<td><!--<input type="text" name="salary"  class="Input" placeholder="Ex: 28000" size="15" style="height: 48px;  font-size: 18pt; font-family: 'Poppins', sans-serif;"></td>							
+						-->
+						
+						
+						<input type="text" name="salary"  class="Input" placeholder="Ex: 85,000" size="15" style="height: 48px;  font-size: 18pt; font-family: 'Poppins', sans-serif; "pattern="^\d{1,3}(,\d{3})*(\.\d+)?" value="" data-type="currency"></td>	
+					
 						<br>
 						<br>						
 					<u><td align="right" valign="top">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Type:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td></u>
@@ -177,50 +185,56 @@
 					<input class="radio" type="radio" name="type" value="Monthly" style="height:20px; width:20px;">
 						<br>
 						<br>
-				
+		
 						<input name="compute" type="submit" style="height: 50px; width: 175; font-size: 18pt; font-family: 'Poppins', sans-serif;" value="Compute">		
 									
 						  
 				</form>		
 						<br>
-				
-							
-					Annual Salary:				
+										
+					<b>Annual Salary:	</b>			
 						<?php 
-							if ($complete==true) { 													
-								echo "PHP ".$Annual_Salary;					
+							if ($complete==true) { 																					
+								echo "PHP ".number_format($Annual_Salary, 2);		
+								
 							}										
 						?>
 					
 						<br><br>
 							
-					Est. Annual Tax:
+					<b>Est. Annual Tax:</b>
 						<?php 
-							if ($complete==true) { 													
-								echo "PHP ".$Est_Annual_Tax;					
+							if ($complete==true) { 	
+								if ($Est_Annual_Tax==0) { 	
+									echo "None";											
+								}	
+								else	
+									echo "PHP ".number_format($Est_Annual_Tax, 2);											
 							}										
 						?>
 					
 						<br><br>
 						
-					Est. Monthly Tax:
+					<b>Est. Monthly Tax:</b>
 						<?php 
-							if ($complete==true) { 													
-								echo "PHP ".round($Est_Monthly_Tax,2);					
-							}									
+							if ($complete==true) { 	
+								if ($Est_Monthly_Tax==0) { 	
+									echo "None";											
+								}	
+							else			
+								echo "PHP ".number_format($Est_Monthly_Tax, 2);											
+							}										
 						?>
 						
-						<br><br>						
+						<br><br>		
 						
+					</form>		
+					
 				</center>	
 											
 			</AppN>
 		
-
 		</header>
-
-</form>
-		
 
 	</body>
 

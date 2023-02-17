@@ -1,7 +1,6 @@
 <?php session_start();
-			
+			$complete = false; 
 				if(isset($_POST['compute'])){
-					$msg = "<span style='color:red'>Hello World!</span>";
 
 					// Popup display if no input
 					if(@$_REQUEST['type'] == NULL && @$_REQUEST['salary'] == NULL)
@@ -9,21 +8,22 @@
 						echo '<script> alert("Please input your salary and choose a type.") </script>'; 
 						$complete = false; 
 					}
-					
+					//Popup display if no salary
+					else if (@$_REQUEST['salary'] == NULL)
+					{ 
+						echo '<script> alert("Please input your salary.") </script>'; 
+						$complete = false; 
+					}			
+					//Popup display if no type
 					else if (@$_REQUEST['type'] == NULL)
 					{ 
 						echo '<script> alert("Please choose a type.") </script>'; 
 						$complete = false; 
 					}
-					
-					else if (@$_REQUEST['salary'] == NULL)
-					{ 
-						echo '<script> alert("Please input your salary.") </script>'; 
-						$complete = false; 
-					}					
-		
+
 					else
 					{
+						//This initializes the variables
 						$complete = true; 
 						$money = $_POST['salary'];
 						$type = $_POST['type'];
@@ -34,86 +34,121 @@
 					
 						switch($type){
 							case 'Monthly':
-							if ($money < 250000){
-								$Annual_Salary  = $_POST['salary'];	
+							
+							//This computes for annual salary (multiply by 12 for all months in a year)
+							$Annual_Salary = $money * 12;
+							
+							if ($Annual_Salary < 250000){
+								//This computes for Est Annual Tax 
+								$Est_Annual_Tax = 0;
+								//This computes for Est Monthly Tax 
+								$Est_Monthly_Tax = 0;
+
 							}	
-							else if ($money >= 250000 && $money < 400000){
-								//This computes for annual salary (Salary is above 250000, so subtract it with 250000)
-								$Annual_Salary = $money - 250000;
-								//This computes for Est Annual Tax (Use annual salary and get it's 20%)
-								$Est_Annual_Tax = $Annual_Salary * .2;
+							else if ($Annual_Salary >= 250000 && $Annual_Salary < 400000){
+
+								//This computes for Est Annual Tax (Use annual salary and subtract 250000, then get it's 20%)
+								$Est_Annual_Tax = ($Annual_Salary - 250000) * .2 ;
 								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
 								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
-								//This computes for monthly salary (Divide salary by 12 because months)
-								$Monthly_Salary = $money / 12;
-						
 							}	
-							else if ($money >= 400000 && $money < 800000){
-								//This computes for annual salary (Salary is above 400000, so subtract it with 400000)
-								$Annual_Salary = $money - 400000;							
+							
+							else if ($Annual_Salary >= 400000 && $Annual_Salary < 800000){					
 								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
-								$Est_Annual_Tax = ($Annual_Salary * .25) + 30000;
+								$Est_Annual_Tax = (($Annual_Salary - 400000)* .25) + 30000;
 								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
 								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
-								//This computes for monthly salary (Divide salary by 12 because months)
-								$Monthly_Salary = $money / 12;
-							}
-							else if ($money >= 800000 && $money < 2000000){		
-								//This computes for annual salary (Salary is above 800000, so subtract it with 800000)
-								$Annual_Salary = $money - 800000;							
-								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
-								$Est_Annual_Tax = ($Annual_Salary * .3) + 130000;
-								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
-								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
-								//This computes for monthly salary (Divide salary by 12 because months)
-								$Monthly_Salary = $money / 12;
-							}
-							else if ($money >= 2000000 && $money < 8000000){		
-								//This computes for annual salary (Salary is above 2000000, so subtract it with 2000000)
-								$Annual_Salary = $money - 2000000;							
-								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
-								$Est_Annual_Tax = ($Annual_Salary * .32) + 490000;
-								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
-								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
-								//This computes for monthly salary (Divide salary by 12 because months)
-								$Monthly_Salary = $money / 12;
-							}		
-							else{
-								//This computes for annual salary (Salary is above 8000000, so subtract it with 8000000)
-								$Annual_Salary = $money - 8000000;							
-								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
-								$Est_Annual_Tax = ($Annual_Salary * .35) + 2410000;
-								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
-								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
-								//This computes for monthly salary (Divide salary by 12 because months)
-								$Monthly_Salary = $money / 12;
 							}
 							
-							break;
-							default:
-							echo '<script> alert("Bi monthly is not yet worked on.") </script>';
+							else if ($Annual_Salary >= 800000 && $Annual_Salary < 2000000){								
+								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
+								$Est_Annual_Tax = (($Annual_Salary - 800000) * .3) + 130000;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;						
 							}
+							
+							else if ($Annual_Salary >= 2000000 && $Annual_Salary < 8000000){									
+								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
+								$Est_Annual_Tax = (($Annual_Salary - 2000000) * .32) + 490000;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
+							}		
+							
+							else{							
+								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
+								$Est_Annual_Tax = (($Annual_Salary - 8000000) * .35) + 2410000;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
+							}
+	
+							break;
+							//This computes for annual salary (multiply by 24 for all months in a year twice)
+							case 'Bi - Monthly':
+							
+							//This computes for annual salary (multiply by 12 for all months in a year)
+							$Annual_Salary = $money * 24;
+							
+							if ($Annual_Salary < 250000){
+								//This computes for Est Annual Tax 
+								$Est_Annual_Tax = 0;
+								//This computes for Est Monthly Tax 
+								$Est_Monthly_Tax = 0;
+
+							}	
+							else if ($Annual_Salary >= 250000 && $Annual_Salary < 400000){
+
+								//This computes for Est Annual Tax (Use annual salary and subtract 250000, then get it's 20%)
+								$Est_Annual_Tax = ($Annual_Salary - 250000) * .2 ;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
+							}	
+							
+							else if ($Annual_Salary >= 400000 && $Annual_Salary < 800000){					
+								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
+								$Est_Annual_Tax = (($Annual_Salary - 400000)* .25) + 30000;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
+							}
+							
+							else if ($Annual_Salary >= 800000 && $Annual_Salary < 2000000){								
+								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
+								$Est_Annual_Tax = (($Annual_Salary - 800000) * .3) + 130000;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;						
+							}
+							
+							else if ($Annual_Salary >= 2000000 && $Annual_Salary < 8000000){									
+								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
+								$Est_Annual_Tax = (($Annual_Salary - 2000000) * .32) + 490000;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
+							}		
+							
+							else{							
+								//This computes for Est Annual Tax (Use annual salary and get it's 25% and add 30000)
+								$Est_Annual_Tax = (($Annual_Salary - 8000000) * .35) + 2410000;
+								//This computes for Est Annual Tax (Get annual tax then divide it all by 12, because months in a year)
+								$Est_Monthly_Tax = $Est_Annual_Tax / 12;
+							}					
 						}
 					}
+				}
 				
 	?>	
 	
-
-
-
 
 <!DOCTYPE html>
 <html>
 	<head>
 
 		<meta charset="UTF-8">
-		<title> test</title>
+		<title>TAXXY: A TAX CALCULATOR WEB APP</title>
 
 		<link rel="stylesheet" href="css/style.css">
 
 	</head>
 	
-	<body>
+		<body>
 
 		<header class="bg"> 
 
@@ -135,19 +170,17 @@
 							
 					Bi - Monthly:
 					<input class="radio" type="radio" name="type" value="Bi - Monthly" style="height:20px; width:20px;">
-					<!--<input type="radio" name="type" value="Bi-Monthly" style="height:20px; width:20px;">
-					-->	&emsp;
+						&emsp;
 						&emsp;
 							
 					Monthly:
 					<input class="radio" type="radio" name="type" value="Monthly" style="height:20px; width:20px;">
-					<!--<input type="radio" name="type" value="Monthly" style="height:20px; width:20px;">	
-					-->	<br>
 						<br>
-	
+						<br>
+				
+						<input name="compute" type="submit" style="height: 50px; width: 175; font-size: 18pt; font-family: 'Poppins', sans-serif;" value="Compute">		
 									
-						<input name="compute" type="submit" value="Compute" class="Button3" style="height: 50px; width: 175;  font-size: 18pt; font-family: 'Poppins', sans-serif;">						
-					
+						  
 				</form>		
 						<br>
 				
@@ -179,21 +212,6 @@
 						
 						<br><br>						
 						
-						<?php if (isset($msg)) { ?>
-					<td colspan="2" align="center" valign="top"><?php echo $msg; ?></td>   
-					
-				
-						<!-- Example Display -->
-						<td colspan="2" align="center" valign="top"><?php 
-						if ($complete==true)
-						echo $money; ?></td>
-						<td colspan="2" align="center" valign="top"><?php 
-						
-						if ($complete==true)
-						echo $type; ?></td>   					
-				<?php } ?>
-			
-
 				</center>	
 											
 			</AppN>

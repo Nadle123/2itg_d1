@@ -23,20 +23,10 @@ AppN {
   height: 100vh;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(40deg,#963484, blue);
- /*
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  */
+
 }
 
 img.two {
   height: 50%;
   width: auto;
 }
-
-    .button { 
-    padding: 10px 15px; 
-    } 
-

@@ -1,6 +1,29 @@
 <?php session_start();
 			
-				
+				class dumb {
+					
+					private $num = 1;
+					private $word = "hello";
+					
+					public function displayInfo($input) {
+						
+						
+						
+						echo $input . " And that was input";
+						//echo $num . "That is number and then" . $word . "That is text" . $input . "And that was input";
+						
+						
+					}
+					
+					
+					
+				}
+
+		$show = new dumb();
+		
+		$show -> displayInfo("hi");
+
+			
 	?>	
 	
 

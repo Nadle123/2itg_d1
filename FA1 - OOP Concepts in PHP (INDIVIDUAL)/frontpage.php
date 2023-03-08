@@ -1,15 +1,12 @@
 <?php session_start();
 			
-				class dumb {
-					
+				class Experiment {
 					private $num = 1;
 					private $word = "hello";
 					
-					public function displayInfo() {					
-				
-						echo nl2br("The number is = " . $this->getNum() . "\n",false);	
-						echo "The word is = " . $this->getWord() . "\n";							
-						
+					public function displayInfo() {							
+						echo nl2br("The number is = " . $this->getNum() . "\n",false);		
+						echo nl2br("The word is = " . $this->getWord() . "\n",false);							
 					}
 					
 					public function getNum(){
@@ -30,10 +27,24 @@
 					
 				}
 
-		$show = new dumb();
+				class ExtraExperiment extends Experiment {
+					private $newWord = "save";
+				}
+		$show = new Experiment();
+		$try = new ExtraExperiment();
+	
+		$try -> displayInfo();
+		$try -> setWord("Second part?");
+		$try -> setNum(2023);		
+		$try -> displayInfo();
 	
 		$show -> displayInfo();
-
+		$show -> setWord("WOOOAHH");	
+		$show -> displayInfo();
+		
+		
+	
+		
 			
 	?>	
 	

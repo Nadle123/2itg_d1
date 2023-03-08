@@ -5,23 +5,34 @@
 					private $num = 1;
 					private $word = "hello";
 					
-					public function displayInfo($input) {
-						
-						
-						
-						echo $input . " And that was input";
-						//echo $num . "That is number and then" . $word . "That is text" . $input . "And that was input";
-						
+					public function displayInfo() {					
+				
+						echo nl2br("The number is = " . $this->getNum() . "\n",false);	
+						echo "The word is = " . $this->getWord() . "\n";							
 						
 					}
 					
+					public function getNum(){
+						return $this->num;
+					}
 					
+					public function getWord(){
+						return $this->word;
+					}
+					
+					public function setNum($num){
+						$this->num = $num;
+					}
+					
+					public function setWord($word){
+						$this->word = $word;
+					}
 					
 				}
 
 		$show = new dumb();
-		
-		$show -> displayInfo("hi");
+	
+		$show -> displayInfo();
 
 			
 	?>	

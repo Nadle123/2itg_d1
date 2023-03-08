@@ -28,13 +28,24 @@
 				}
 
 				class ExtraExperiment extends Experiment {
-					private $newWord = "save";
+					private $newWord;
+					
+					function __construct($newWord) {
+						$this->newWord = $newWord; 
+					}
+					
+					public function getNewWord(){
+						return $this->newWord;
+					}
+					
 				}
+				
+				
+				
 		$show = new Experiment();
-		$try = new ExtraExperiment();
+		$try = new ExtraExperiment("please work this time");
 	
 		$try -> displayInfo();
-		$try -> setWord("Second part?");
 		$try -> setNum(2023);		
 		$try -> displayInfo();
 	
@@ -42,7 +53,7 @@
 		$show -> setWord("WOOOAHH");	
 		$show -> displayInfo();
 		
-		
+		echo nl2br("The word is = " . $try->getNewWord() . "\n",false);
 	
 		
 			

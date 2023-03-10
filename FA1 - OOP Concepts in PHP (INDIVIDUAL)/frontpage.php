@@ -40,15 +40,23 @@
 				return $this->newWord;
 			}
 					
-			public function printInfo() {							
-				echo nl2br("This is the child class of the parent class, the string is = " . $this->getNewWord() . "\n",false);							
-			}	
+			function __call ($type,$arg){
+				if($type=="printInfo"){
+					$c=count($arg);
+					switch ($c){
+						case 1:
+							echo nl2br("This is the child class, and an overload of the printInfo". "\n");	
+							echo nl2br("The overloaded text is = " . $arg[0] . "\n",false);		
+							echo nl2br("While the string is = " . $this->getNewWord() . "\n",false);	
+						
+						default:
+							echo nl2br("This is the child class of the parent class, the string is = " . $this->getNewWord() . "\n",false);	
+					
+					}
+				}
+			}				
+					
 
-			public function printInfo(string $extras) {							
-				echo nl2br("This is the child class, and an overload of the printInfo \n",false);	
-				echo nl2br("The overloaded text is = " . $extras() . "\n",false);		
-				echo nl2br("While the string is = " . $this->getNewWord() . "\n",false);						
-			}	
 			
 			public function displayInfo() {							
 				echo nl2br("Child class of the parent class (while overriding the displayInfo), the string is = " . $this->getNewWord() . "\n",false);							
@@ -71,8 +79,8 @@
 							
 			}			
 			public function displayInfo() {							
-				echo nl2br("This is the child class, the number is = " . $this->getNum() . "\n",false);		
-				echo nl2br("This is the child class, the word is = " . $this->getWord() . "\n",false);				
+				echo nl2br("This is the child class (with displayInfo), the number is = " . $this->getNum() . "\n",false);		
+				echo nl2br("This is the child class (with displayInfo), the word is = " . $this->getWord() . "\n",false);				
 			}
 		}
 		
@@ -101,9 +109,10 @@
 		$show -> displayInfo();
 
 		$try = new ExtraExperiment("hopefully this works");	
+		$try -> printInfo("One of the moments of all time");
 		$try -> printInfo();
 		$try -> displayInfo();
-		$try -> printInfo("One of the moments of all time");
+		
 		
 		$epic = new ChildExtraExperiment("It's multilevelling time");	
 		$epic -> printInfo();

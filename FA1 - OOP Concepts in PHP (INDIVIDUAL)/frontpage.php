@@ -50,13 +50,10 @@
 							echo nl2br("While the string is = " . $this->getNewWord() . "\n",false);	
 						
 						default:
-							echo nl2br("This is the child class of the parent class, the string is = " . $this->getNewWord() . "\n",false);	
-					
+							echo nl2br("This is the child class of the parent class, the string is = " . $this->getNewWord() . "\n",false);			
 					}
 				}
-			}				
-					
-
+			}								
 			
 			public function displayInfo() {							
 				echo nl2br("Child class of the parent class (while overriding the displayInfo), the string is = " . $this->getNewWord() . "\n",false);							
@@ -131,7 +128,6 @@
 		
 		<title>FA1 - OOP Concepts in PHP (INDIVIDUAL)</title>
 
-		<link rel="stylesheet" href="css/style.css">
 
 	</head>
 	

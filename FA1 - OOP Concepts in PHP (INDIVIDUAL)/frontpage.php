@@ -1,62 +1,116 @@
 <?php session_start();
 			
-				class Experiment {
-					private $num = 1;
-					private $word = "hello";
+	class Experiment {
+			private $num = 1;
+			private $word = "hello";
 					
-					public function displayInfo() {							
-						echo nl2br("The number is = " . $this->getNum() . "\n",false);		
-						echo nl2br("The word is = " . $this->getWord() . "\n",false);							
-					}
+			public function displayInfo() {		
+				echo nl2br("This is the display info function of the parent class: \n");					
+				echo nl2br("This is the parent class, the number is = " . $this->getNum() . "\n",false);		
+				echo nl2br("This is the parent class, the word is = " . $this->getWord() . "\n",false);	
+				echo nl2br("This is the end of the display info function of the parent class \n");					
+			}
 					
-					public function getNum(){
-						return $this->num;
-					}
+			public function getNum(){
+				return $this->num;
+			}
 					
-					public function getWord(){
-						return $this->word;
-					}
+			public function getWord(){
+				return $this->word;
+			}
 					
-					public function setNum($num){
-						$this->num = $num;
-					}
+			public function setNum($num){
+				$this->num = $num;
+			}
 					
-					public function setWord($word){
-						$this->word = $word;
-					}
-					
-				}
+			public function setWord($word){
+				$this->word = $word;
+			}			
+		}
 
-				class ExtraExperiment extends Experiment {
-					private $newWord;
+
+		class ExtraExperiment extends Experiment {
+			private $newWord;
 					
-					function __construct($newWord) {
-						$this->newWord = $newWord; 
-					}
+			function __construct($newWord) {
+				$this->newWord = $newWord; 
+			}
 					
-					public function getNewWord(){
-						return $this->newWord;
-					}
+			public function getNewWord(){
+				return $this->newWord;
+			}
 					
-				}
-				
-				
-				
-		$show = new Experiment();
-		$try = new ExtraExperiment("please work this time");
-	
-		$try -> displayInfo();
-		$try -> setNum(2023);		
-		$try -> displayInfo();
-	
-		$show -> displayInfo();
-		$show -> setWord("WOOOAHH");	
-		$show -> displayInfo();
-		
-		echo nl2br("The word is = " . $try->getNewWord() . "\n",false);
-	
-		
+			public function printInfo() {							
+				echo nl2br("This is the child class of the parent class, the string is = " . $this->getNewWord() . "\n",false);							
+			}	
+
+			public function printInfo(string $extras) {							
+				echo nl2br("This is the child class, and an overload of the printInfo \n",false);	
+				echo nl2br("The overloaded text is = " . $extras() . "\n",false);		
+				echo nl2br("While the string is = " . $this->getNewWord() . "\n",false);						
+			}	
 			
+			public function displayInfo() {							
+				echo nl2br("Child class of the parent class (while overriding the displayInfo), the string is = " . $this->getNewWord() . "\n",false);							
+			}					
+		}
+		
+		class ChildExtraExperiment extends ExtraExperiment {
+			private $freshWord;
+					
+			function __construct($freshWord) {
+				$this->freshWord = $freshWord; 
+			}
+					
+			public function getFreshWord(){
+				return $this->freshWord;
+			}
+					
+			public function printInfo() {							
+				echo nl2br("This is the child class of the child class, the string is = " . $this->getFreshWord() . "\n",false);		
+							
+			}			
+			public function displayInfo() {							
+				echo nl2br("This is the child class, the number is = " . $this->getNum() . "\n",false);		
+				echo nl2br("This is the child class, the word is = " . $this->getWord() . "\n",false);				
+			}
+		}
+		
+		class SiblingExtraExperiment extends Experiment {
+			private $latestWord;
+					
+			function __construct($latestWord) {
+				$this->latestWord = $latestWord; 
+			}
+					
+			public function getLatestWord(){
+				return $this->latestWord;
+			}
+					
+			public function printInfo() {							
+				echo nl2br("This is another child class of the parent class, the string is = " . $this->getLatestWord() . "\n",false);		
+							
+			}			
+		}
+
+
+		$show = new Experiment();
+		$show -> displayInfo();
+		$show -> setWord("Changes");	
+		$show -> setNum(32);	
+		$show -> displayInfo();
+
+		$try = new ExtraExperiment("hopefully this works");	
+		$try -> printInfo();
+		$try -> displayInfo();
+		$try -> printInfo("One of the moments of all time");
+		
+		$epic = new ChildExtraExperiment("It's multilevelling time");	
+		$epic -> printInfo();
+		
+		$newbie = new SiblingExtraExperiment("hierarchical time");
+		$newbie -> printInfo();		
+		
 	?>	
 	
 
@@ -74,7 +128,7 @@
 	
 	<body>
 
-		test
+		
 
 	</body>
 
